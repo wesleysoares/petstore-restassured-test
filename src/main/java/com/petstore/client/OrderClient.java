@@ -1,20 +1,20 @@
 package com.petstore.client;
 
-import com.petstore.model.pet.Pet;
+import com.petstore.model.store.Order;
 import com.petstore.utils.DefaultRequestParams;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class PetClient {
+public class OrderClient {
 
-    public Response createPetSuccessfullyFromApi(Pet pet) {
+    public Response createOrderSuccessfullyFromApi(Order order) {
         return
             given().
                 spec(DefaultRequestParams.headerParams()).
-                body(pet).
+                body(order).
             when().
-                post("/pet").
+                post("store/order").
             then().
                 statusCode(200).
                 extract().

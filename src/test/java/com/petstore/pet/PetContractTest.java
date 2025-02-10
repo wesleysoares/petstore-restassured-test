@@ -6,8 +6,7 @@ import com.petstore.factory.PetDataFactory;
 import com.petstore.utils.DefaultRequestParams;
 import org.junit.jupiter.api.*;
 
-import static com.petstore.utils.TestTags.CONTRACT;
-import static com.petstore.utils.TestTags.PET;
+import static com.petstore.utils.TestTags.*;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
@@ -18,11 +17,9 @@ public class PetContractTest extends BaseAPI {
     @Tag(CONTRACT)
     @DisplayName("Should validate the contract for POST Pet method")
     void createNewPetSuccessfully(){
-        var petValid = PetDataFactory.validPet();
-
         given().
             spec(DefaultRequestParams.headerParams()).
-            body(petValid).
+            body(PetDataFactory.validPet()).
         when().
             post("/pet").
         then().
@@ -34,17 +31,15 @@ public class PetContractTest extends BaseAPI {
     @Tag(CONTRACT)
     @DisplayName("Should validate the contract for GET Pet by ID method")
     void returnPetById(){
-        final var petValid = PetDataFactory.validPet();
-
         //It is necessary to create a valid Pet registration to ensure consistency in test data
-        new PetClient().createPetSuccessfullyFromApi(petValid);
+        var pet = new PetClient().createPetSuccessfullyFromApi(PetDataFactory.validPet());
 
         given().
             spec(DefaultRequestParams.headerParams()).
-            pathParam("id", petValid.getId()).
+            pathParam("id", pet.getBody().path("id").toString()).
         when().
             get("/pet/{id}").
         then().
-            body(matchesJsonSchemaInClasspath("schemas/pet_v2_get_schema.json"));;
+            body(matchesJsonSchemaInClasspath("schemas/pet_v2_get_schema.json"));
     }
 }
