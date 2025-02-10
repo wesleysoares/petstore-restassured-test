@@ -8,13 +8,15 @@ import org.junit.jupiter.api.*;
 
 import java.util.Random;
 
+import static com.petstore.utils.TestTags.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class PetFunctionalTest extends BaseAPI {
 
     @Test
-    @Tag("pet")
+    @Tag(PET)
+    @Tag(FUNCTIONAL)
     @DisplayName("Should create a new pet")
     void createNewPetSuccessfully(){
         var petValid = PetDataFactory.validPet();
@@ -29,7 +31,8 @@ public class PetFunctionalTest extends BaseAPI {
     }
 
     @Test
-    @Tag("pet")
+    @Tag(PET)
+    @Tag(FUNCTIONAL)
     @DisplayName("Should find a pet filtered by Id")
     void returnPetById(){
         final var petValid = PetDataFactory.validPet();
@@ -57,7 +60,8 @@ public class PetFunctionalTest extends BaseAPI {
     }
 
     @Test
-    @Tag("pet")
+    @Tag(PET)
+    @Tag(FUNCTIONAL)
     @DisplayName("Should find a pet filtered by Id")
     void notFoundPetById(){
         given().
@@ -72,7 +76,8 @@ public class PetFunctionalTest extends BaseAPI {
     }
 
     @Test
-    @Tag("pet")
+    @Tag(PET)
+    @Tag(FUNCTIONAL)
     @DisplayName("Should delete a pet by Id")
     void deletePetById(){
         final var petValid = PetDataFactory.validPet();
@@ -91,7 +96,8 @@ public class PetFunctionalTest extends BaseAPI {
     }
 
     @Test
-    @Tag("pet")
+    @Tag(PET)
+    @Tag(FUNCTIONAL)
     @DisplayName("Should validate the return when the id of a non-existing pet is provided")
     void notFoundDeletePetById(){
         given().
