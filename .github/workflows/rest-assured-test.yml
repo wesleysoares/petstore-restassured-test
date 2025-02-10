@@ -1,4 +1,4 @@
-name: Rest Assured Tests Automation CI
+name: Rest Assured Tests Automation
 
 on:
   push:
