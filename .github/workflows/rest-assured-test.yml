@@ -52,7 +52,7 @@ jobs:
         id: allure-report
         if: always()
         with:
-          allure-results: target/surefire-reports
+          allure-results: target/surefire-reports/
           website: gh-pages-dir
           reports-site-path: builds/tests
 
