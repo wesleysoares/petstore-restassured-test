@@ -39,3 +39,19 @@ jobs:
       - name: Execute test suite
         run: mvn clean test
         continue-on-error: true
+
+      - name: Checkout github pages with previous Allure reports
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages-dir
+
+      - name: Generate Allure test report
+        uses: andgineer/allure-report@v3.4
+        id: allure-report
+        if: always()
+        with:
+          allure-results: target/surefire-reports
+          website: gh-pages-dir
+          reports-site-path: builds/tests
