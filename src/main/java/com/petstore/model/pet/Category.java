@@ -1,4 +1,4 @@
-package com.petstore.model;
+package com.petstore.model.pet;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

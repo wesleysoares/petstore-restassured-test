@@ -19,11 +19,9 @@ public class PetFunctionalTest extends BaseAPI {
     @Tag(FUNCTIONAL)
     @DisplayName("Should create a new pet")
     void createNewPetSuccessfully(){
-        var petValid = PetDataFactory.validPet();
-
         given().
             spec(DefaultRequestParams.headerParams()).
-            body(petValid).
+            body(PetDataFactory.validPet()).
         when().
             post("/pet").
         then().
@@ -80,19 +78,17 @@ public class PetFunctionalTest extends BaseAPI {
     @Tag(FUNCTIONAL)
     @DisplayName("Should delete a pet by Id")
     void deletePetById(){
-        final var petValid = PetDataFactory.validPet();
-
         //It is necessary to create a valid Pet registration to ensure consistency in test data
-        new PetClient().createPetSuccessfullyFromApi(petValid);
+        var pet = new PetClient().createPetSuccessfullyFromApi(PetDataFactory.validPet());
 
         given().
             spec(DefaultRequestParams.headerParams()).
-            pathParam("id", petValid.getId()).
+            pathParam("id", pet.getBody().path("id").toString()).
         when().
             delete("/pet/{id}").
         then().
             statusCode(200).
-            body("message", equalTo(petValid.getId().toString()));
+            body("message", equalTo(pet.getBody().path("id").toString()));
     }
 
     @Test
